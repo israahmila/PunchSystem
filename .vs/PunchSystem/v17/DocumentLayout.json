@@ -1,0 +1,101 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|c:\\users\\lenovo\\source\\repos\\punchsystem\\punchsystem\\controllers\\utilisataioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|solutionrelative:punchsystem\\controllers\\utilisataioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|c:\\users\\lenovo\\source\\repos\\punchsystem\\punchsystem\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|solutionrelative:punchsystem\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|c:\\users\\lenovo\\source\\repos\\punchsystem\\punchsystem\\services\\utilisationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|solutionrelative:punchsystem\\services\\utilisationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|c:\\users\\lenovo\\source\\repos\\punchsystem\\punchsystem\\models\\utilisation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|solutionrelative:punchsystem\\models\\utilisation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|c:\\users\\lenovo\\source\\repos\\punchsystem\\punchsystem\\services\\iutilisationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6FDB36A-5B87-4B02-914F-66B149C5F899}|PunchSystem\\PunchSystem.csproj|solutionrelative:punchsystem\\services\\iutilisationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IUtilisationService.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Services\\IUtilisationService.cs",
+              "RelativeDocumentMoniker": "PunchSystem\\Services\\IUtilisationService.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Services\\IUtilisationService.cs",
+              "RelativeToolTip": "PunchSystem\\Services\\IUtilisationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T20:52:38.597Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Utilisation.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Models\\Utilisation.cs",
+              "RelativeDocumentMoniker": "PunchSystem\\Models\\Utilisation.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Models\\Utilisation.cs",
+              "RelativeToolTip": "PunchSystem\\Models\\Utilisation.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAA/wAoAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T20:50:48.537Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "PunchSystem\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "PunchSystem\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAYwF8AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T20:39:18.248Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UtilisationService.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Services\\UtilisationService.cs",
+              "RelativeDocumentMoniker": "PunchSystem\\Services\\UtilisationService.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Services\\UtilisationService.cs",
+              "RelativeToolTip": "PunchSystem\\Services\\UtilisationService.cs",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAQwJMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T20:29:49.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UtilisataionController.cs",
+              "DocumentMoniker": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Controllers\\UtilisataionController.cs",
+              "RelativeDocumentMoniker": "PunchSystem\\Controllers\\UtilisataionController.cs",
+              "ToolTip": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\Controllers\\UtilisataionController.cs",
+              "RelativeToolTip": "PunchSystem\\Controllers\\UtilisataionController.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAQwD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-07T09:12:37.635Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

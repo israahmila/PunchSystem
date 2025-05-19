@@ -1,0 +1,65 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\107df448-80e4-41d8-846c-f963975dd61b.pdf",
+      "PackagePath": "staticwebassets\\uploads\\107df448-80e4-41d8-846c-f963975dd61b.pdf"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\2a79b09d-5a3f-4514-b73a-aa09d98d249a.pdf",
+      "PackagePath": "staticwebassets\\uploads\\2a79b09d-5a3f-4514-b73a-aa09d98d249a.pdf"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\33ce5e42-a3b0-4a24-836f-fac30bad960c.pdf",
+      "PackagePath": "staticwebassets\\uploads\\33ce5e42-a3b0-4a24-836f-fac30bad960c.pdf"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\37a43ca9-47b9-44af-98ff-934baeaa40f5.png",
+      "PackagePath": "staticwebassets\\uploads\\37a43ca9-47b9-44af-98ff-934baeaa40f5.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\4696c327-8cbc-43fe-aff3-4f2f8cddb1f1.pdf",
+      "PackagePath": "staticwebassets\\uploads\\4696c327-8cbc-43fe-aff3-4f2f8cddb1f1.pdf"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\79930b1e-717f-4477-8234-491a296955ff.png",
+      "PackagePath": "staticwebassets\\uploads\\79930b1e-717f-4477-8234-491a296955ff.png"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\a457d207-02ce-4b20-8009-ef1dea0d5ce9.pdf",
+      "PackagePath": "staticwebassets\\uploads\\a457d207-02ce-4b20-8009-ef1dea0d5ce9.pdf"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\b71a69d7-c9dd-4cf6-b197-a88ff5572e3d.pdf",
+      "PackagePath": "staticwebassets\\uploads\\b71a69d7-c9dd-4cf6-b197-a88ff5572e3d.pdf"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\d44a3c4d-888e-4678-9d82-bd49a65a1823.pdf",
+      "PackagePath": "staticwebassets\\uploads\\d44a3c4d-888e-4678-9d82-bd49a65a1823.pdf"
+    },
+    {
+      "Id": "C:\\Users\\LENOVO\\source\\repos\\PunchSystem\\PunchSystem\\wwwroot\\uploads\\fd363728-c6ec-49b0-b569-93bc169cacd4.png",
+      "PackagePath": "staticwebassets\\uploads\\fd363728-c6ec-49b0-b569-93bc169cacd4.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PunchSystem.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PunchSystem.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.PunchSystem.props",
+      "PackagePath": "build\\PunchSystem.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.PunchSystem.props",
+      "PackagePath": "buildMultiTargeting\\PunchSystem.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.PunchSystem.props",
+      "PackagePath": "buildTransitive\\PunchSystem.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PunchSystem.props" />
+</Project>
