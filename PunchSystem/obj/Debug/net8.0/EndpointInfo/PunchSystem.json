@@ -101,8 +101,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -291,8 +290,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -438,8 +436,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -459,8 +456,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -488,27 +484,6 @@
             "description": "OK"
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "Utilisataion"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     }
   },
@@ -518,8 +493,8 @@
         "type": "object",
         "properties": {
           "userId": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
           },
           "permissions": {
             "type": "array",
@@ -534,7 +509,7 @@
       "CreateUtilisationDto": {
         "type": "object",
         "properties": {
-          "compresseuse": {
+          "comprimeuse": {
             "type": "string",
             "nullable": true
           },
@@ -560,18 +535,83 @@
           "poinconIds": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             },
             "nullable": true
           },
           "userIds": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Fournisseur": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "pays": {
+            "type": "string",
+            "nullable": true
+          },
+          "statut": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginHistory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "loginTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
           }
         },
         "additionalProperties": false
@@ -590,6 +630,275 @@
         },
         "additionalProperties": false
       },
+      "Lot": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "utilisationId": {
+            "type": "string",
+            "nullable": true
+          },
+          "utilisation": {
+            "$ref": "#/components/schemas/Utilisation"
+          },
+          "produit": {
+            "type": "string",
+            "nullable": true
+          },
+          "lotNumber": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Marque": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "statut": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Permission": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "module": {
+            "type": "string",
+            "nullable": true
+          },
+          "action": {
+            "type": "string",
+            "nullable": true
+          },
+          "rolePermissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolePermission"
+            },
+            "nullable": true
+          },
+          "userPermissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserPermission"
+            },
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Poincon": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "codeFormat": {
+            "type": "string",
+            "nullable": true
+          },
+          "forme": {
+            "type": "string",
+            "nullable": true
+          },
+          "marqueId": {
+            "type": "string",
+            "nullable": true
+          },
+          "marque": {
+            "$ref": "#/components/schemas/Marque"
+          },
+          "codeGMAO": {
+            "type": "string",
+            "nullable": true
+          },
+          "fournisseurId": {
+            "type": "string",
+            "nullable": true
+          },
+          "fournisseur": {
+            "$ref": "#/components/schemas/Fournisseur"
+          },
+          "gravureSup": {
+            "type": "string",
+            "nullable": true
+          },
+          "gravureInf": {
+            "type": "string",
+            "nullable": true
+          },
+          "secabilite": {
+            "type": "string",
+            "nullable": true
+          },
+          "clavetage": {
+            "type": "string",
+            "nullable": true
+          },
+          "emplacementReception": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateReception": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateFabrication": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateMiseEnService": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "commentaire": {
+            "type": "string",
+            "nullable": true
+          },
+          "ficheTechniqueUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "matrice": {
+            "type": "string",
+            "nullable": true
+          },
+          "largeur": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "longueur": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "refSup": {
+            "type": "string",
+            "nullable": true
+          },
+          "refInf": {
+            "type": "string",
+            "nullable": true
+          },
+          "diametre": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "chAdm": {
+            "type": "string",
+            "nullable": true
+          },
+          "statut": {
+            "type": "string",
+            "nullable": true
+          },
+          "utilisations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Utilisation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PoinconCreateDto": {
         "type": "object",
         "properties": {
@@ -601,7 +910,7 @@
             "type": "string",
             "nullable": true
           },
-          "marque": {
+          "marqueId": {
             "type": "string",
             "nullable": true
           },
@@ -609,7 +918,7 @@
             "type": "string",
             "nullable": true
           },
-          "fournisseur": {
+          "fournisseurId": {
             "type": "string",
             "nullable": true
           },
@@ -705,7 +1014,7 @@
             "type": "string",
             "nullable": true
           },
-          "marque": {
+          "marqueId": {
             "type": "string",
             "nullable": true
           },
@@ -713,7 +1022,7 @@
             "type": "string",
             "nullable": true
           },
-          "fournisseur": {
+          "fournisseurId": {
             "type": "string",
             "nullable": true
           },
@@ -798,6 +1107,44 @@
         },
         "additionalProperties": false
       },
+      "Produit": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "designation": {
+            "type": "string",
+            "nullable": true
+          },
+          "statut": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterRequest": {
         "type": "object",
         "properties": {
@@ -816,14 +1163,90 @@
         },
         "additionalProperties": false
       },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "rolePermissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RolePermission"
+            },
+            "nullable": true
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RolePermission": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleId": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "permissionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateUtilisationDto": {
         "type": "object",
         "properties": {
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
           "dateUtilisation": {
             "type": "string",
             "format": "date-time"
           },
-          "compresseuse": {
+          "comprimeuse": {
+            "type": "string",
+            "nullable": true
+          },
+          "produitId": {
+            "type": "string",
+            "nullable": true
+          },
+          "codeFormatPoincon": {
             "type": "string",
             "nullable": true
           },
@@ -839,26 +1262,227 @@
             "type": "string",
             "nullable": true
           },
-          "lotNumbers": {
+          "poinconIds": {
             "type": "array",
             "items": {
               "type": "string"
             },
             "nullable": true
           },
-          "poinconIds": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "nullable": true
-          },
           "userIds": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "lots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Lot"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "nom": {
+            "type": "string",
+            "nullable": true
+          },
+          "prenom": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "passwordHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleId": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "$ref": "#/components/schemas/Role"
+          },
+          "statut": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "failedLoginAttempts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "loginHistories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoginHistory"
+            },
+            "nullable": true
+          },
+          "userPermissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserPermission"
+            },
+            "nullable": true
+          },
+          "utilisations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Utilisation"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserPermission": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "permissionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Utilisation": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "reference": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateUtilisation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "comprimeuse": {
+            "type": "string",
+            "nullable": true
+          },
+          "produitId": {
+            "type": "string",
+            "nullable": true
+          },
+          "produit": {
+            "$ref": "#/components/schemas/Produit"
+          },
+          "codeFormatPoincon": {
+            "type": "string",
+            "nullable": true
+          },
+          "nombreComprimés": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "emplacementRetour": {
+            "type": "string",
+            "nullable": true
+          },
+          "commentaire": {
+            "type": "string",
+            "nullable": true
+          },
+          "lots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Lot"
+            },
+            "nullable": true
+          },
+          "poincons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Poincon"
+            },
+            "nullable": true
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
             },
             "nullable": true
           }
@@ -869,14 +1493,14 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
           },
           "dateUtilisation": {
             "type": "string",
             "format": "date-time"
           },
-          "compresseuse": {
+          "comprimeuse": {
             "type": "string",
             "nullable": true
           },
@@ -902,16 +1526,14 @@
           "poinconIds": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             },
             "nullable": true
           },
           "userIds": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             },
             "nullable": true
           },

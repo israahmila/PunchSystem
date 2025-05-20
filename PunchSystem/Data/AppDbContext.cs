@@ -86,18 +86,26 @@ namespace PunchSystem.Data
 
             foreach (var entry in entries)
             {
-                switch (entry.State)
+                var userId = _userContext.GetCurrentUserId() ?? "SYSTEM";
+
+                if (entry.State == EntityState.Added)
                 {
-                    case EntityState.Added:
-                        entry.Entity.CreatedAt = DateTime.UtcNow;
-                        break;
-                    case EntityState.Modified:
-                        entry.Entity.UpdatedAt = DateTime.UtcNow;
-                        break;
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.CreatedBy = userId;
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    entry.Entity.UpdatedBy = userId; // ✅ fix ici
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    entry.Entity.UpdatedBy = userId;
                 }
             }
 
             return await base.SaveChangesAsync(cancellationToken);
         }
+
+
     }
 }

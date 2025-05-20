@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using PunchSystem.Services;
 
 namespace PunchSystem.Data
@@ -8,26 +9,22 @@ namespace PunchSystem.Data
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            // Make sure to read from appsettings.json
             var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory()) // path to appsettings.json
+                .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlServer(config.GetConnectionString("Default"));
+            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
 
-            // Use a dummy implementation that returns static values
-            var dummyUserContext = new DummyUserContextService();
-
-            return new AppDbContext(optionsBuilder.Options, dummyUserContext);
+            // Tu peux passer null si tu ne veux pas injecter le service utilisateur à la main
+            return new AppDbContext(optionsBuilder.Options, new FakeUserContextService());
         }
     }
 
-    // Dummy user context for EF CLI
-    public class DummyUserContextService : IUserContextService
+    public class FakeUserContextService : IUserContextService
     {
-        public string? GetCurrentUserId() => "system";
-        public string? GetCurrentUsername() => "system";
+        public string? GetCurrentUserId() => "SYSTEM";
+        public string? GetCurrentUsername() => "SYSTEM";
     }
 }

@@ -2,7 +2,7 @@
 
 namespace PunchSystem.Models
 {
-    public class Role:AuditableEntity
+    public class Role
     {
         public string Id { get; set; } = IdGenerator.New("ROL");
         public string Name { get; set; } = null!;

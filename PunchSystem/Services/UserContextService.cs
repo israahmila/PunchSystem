@@ -19,6 +19,12 @@
             return _httpContext.HttpContext?.User?.Identity?.Name;
         }
     }
-    
-    
+    public class SystemUserContextService : IUserContextService
+    {
+        public string? GetCurrentUserId() => "SYSTEM";
+        public string? GetCurrentUsername() => "SystemSeeder";
+    }
+
+
+
 }

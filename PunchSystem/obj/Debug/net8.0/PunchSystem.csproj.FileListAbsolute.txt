@@ -176,3 +176,4 @@ C:\Users\LENOVO\source\repos\PunchSystem\PunchSystem\obj\Debug\net8.0\ref\PunchS
 C:\Users\LENOVO\source\repos\PunchSystem\PunchSystem\obj\Debug\net8.0\PunchSystem.sourcelink.json
 C:\Users\LENOVO\source\repos\PunchSystem\PunchSystem\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\LENOVO\source\repos\PunchSystem\PunchSystem\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\LENOVO\source\repos\PunchSystem\PunchSystem\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
