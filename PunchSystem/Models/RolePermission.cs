@@ -1,11 +1,11 @@
 ﻿namespace PunchSystem.Models
 {
-    public class RolePermission
+    public class RolePermission:AuditableEntity
     {
-        public int RoleId { get; set; }
+        public string RoleId { get; set; } = string.Empty;
         public Role Role { get; set; } = null!;
 
-        public int PermissionId { get; set; }
+        public string PermissionId { get; set; } = string.Empty;
         public Permission Permission { get; set; } = null!;
     }
 }

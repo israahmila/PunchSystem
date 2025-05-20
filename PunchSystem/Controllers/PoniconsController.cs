@@ -41,9 +41,9 @@ public class PoinconsController : ControllerBase
         {
             CodeFormat = dto.CodeFormat,
             Forme = dto.Forme,
-            Marque = dto.Marque,
+            MarqueId = dto.MarqueId,
             CodeGMAO = dto.CodeGMAO,
-            Fournisseur = dto.Fournisseur,
+            FournisseurId = dto.FournisseurId,
             GravureSup = dto.GravureSup,
             GravureInf = dto.GravureInf,
             Secabilite = dto.Secabilite,
@@ -61,7 +61,7 @@ public class PoinconsController : ControllerBase
             RefInf = dto.RefInf,
             Diametre = dto.Diametre,
             ChAdm = dto.ChAdm,
-            Status = dto.Status
+            Statut = dto.Status
         }).ToList();
 
         await _context.Poincons.AddRangeAsync(newPoincons);
@@ -120,7 +120,7 @@ public class PoinconsController : ControllerBase
 
     // ✏️ UPDATE POINCON
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] PoinconUpdateDto dto)
+    public async Task<IActionResult> Update(string id, [FromBody] PoinconUpdateDto dto)
     {
         var poincon = await _context.Poincons.FindAsync(id);
 
@@ -129,9 +129,9 @@ public class PoinconsController : ControllerBase
 
         poincon.CodeFormat = dto.CodeFormat;
         poincon.Forme = dto.Forme;
-        poincon.Marque = dto.Marque;
+        poincon.MarqueId = dto.MarqueId;
         poincon.CodeGMAO = dto.CodeGMAO;
-        poincon.Fournisseur = dto.Fournisseur;
+        poincon.FournisseurId = dto.FournisseurId;
         poincon.GravureSup = dto.GravureSup;
         poincon.GravureInf = dto.GravureInf;
         poincon.Secabilite = dto.Secabilite;
@@ -148,7 +148,7 @@ public class PoinconsController : ControllerBase
         poincon.RefInf = dto.RefInf;
         poincon.Diametre = dto.Diametre;
         poincon.ChAdm = dto.ChAdm;
-        poincon.Status = dto.Status;
+        poincon.Statut = dto.Status;
         if (!string.IsNullOrWhiteSpace(dto.FicheTechniqueUrl))
             poincon.FicheTechniqueUrl = dto.FicheTechniqueUrl;
 
@@ -165,7 +165,7 @@ public class PoinconsController : ControllerBase
         if (poincon == null)
             return NotFound();
 
-        poincon.Status = "inactive"; // ✅ Soft delete by setting status
+        poincon.Statut = "inactive"; // ✅ Soft delete by setting status
         await _context.SaveChangesAsync();
 
         return NoContent(); // 204

@@ -33,7 +33,6 @@ public class AuthService : IAuthService
 
         var user = new User
         {
-            Id = 0, // Auto-incremented by the database
             Username = username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
             RoleId = role.Id,

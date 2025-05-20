@@ -4,9 +4,9 @@
     {
         public string CodeFormat { get; set; } = string.Empty;
         public string? Forme { get; set; }
-        public string? Marque { get; set; }
+        public string MarqueId { get; set; } = string.Empty;
         public string? CodeGMAO { get; set; }
-        public string? Fournisseur { get; set; }
+        public string FournisseurId { get; set; } = string.Empty;
         public string? GravureSup { get; set; }
         public string? GravureInf { get; set; }
         public string? Secabilite { get; set; }

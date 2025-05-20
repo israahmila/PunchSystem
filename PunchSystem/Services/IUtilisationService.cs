@@ -1,15 +1,16 @@
 ﻿using PunchSystem.DTOs;
+using PunchSystem.Models;
 
 namespace PunchSystem.Services
 {
     public interface IUtilisationService
     {
-        Task<IEnumerable<UtilisationDto>> GetAllAsync();
-        Task<UtilisationDto> CreateAsync(CreateUtilisationDto dto);
-        Task<UtilisationDto?> GetByIdAsync(int id);
-        Task<bool> UpdateAsync(int id, UpdateUtilisationDto dto);
-        Task<bool> DeleteAsync(int id);
+        Task<IEnumerable<Utilisation>> GetAllAsync();
+        Task<Utilisation?> GetByIdAsync(string id);
+        Task<Utilisation> CreateAsync(CreateUtilisationDto dto);
 
-
+        Task<bool> UpdateAsync(string id, UpdateUtilisationDto dto);
+        Task DeleteAsync(string id, string raison, string utilisateur);
     }
+
 }

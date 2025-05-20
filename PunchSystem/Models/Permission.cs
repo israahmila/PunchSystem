@@ -1,9 +1,20 @@
-﻿namespace PunchSystem.Models
+﻿using PunchSystem.Helpers;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PunchSystem.Models
 {
-    public class Permission
+    public class Permission: AuditableEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public string Id { get; set; } = IdGenerator.New("PER");
+        public string Module { get; set; } =string.Empty;
+        public string Action { get; set; } = string.Empty;
+
+        public ICollection<RolePermission> RolePermissions { get; set; }= new List<RolePermission>();
         public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
+
+        [NotMapped]
+        public string Name => $"{Module}.{Action}";
+
     }
+
 }

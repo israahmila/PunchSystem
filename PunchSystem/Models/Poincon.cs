@@ -1,13 +1,17 @@
-﻿namespace PunchSystem.Models;
+﻿using PunchSystem.Helpers;
 
-public class Poincon
+namespace PunchSystem.Models;
+
+public class Poincon:AuditableEntity
 {
-    public int Id { get; set; } 
+    public string Id { get; set; } = IdGenerator.New("POI");
     public string CodeFormat { get; set; } = string.Empty;
-    public string? Forme { get; set; }
-    public string? Marque { get; set; }
-    public string? CodeGMAO { get; set; }
-    public string? Fournisseur { get; set; }
+    public string Forme { get; set; } = string.Empty;
+    public string MarqueId { get; set; } = string.Empty;
+    public Marque Marque { get; set; } =new Marque();
+    public string CodeGMAO { get; set; } = string.Empty;
+    public string FournisseurId { get; set; } = string.Empty;
+    public Fournisseur Fournisseur { get; set; } = new Fournisseur();
     public string? GravureSup { get; set; }
     public string? GravureInf { get; set; }
     public string? Secabilite { get; set; }
@@ -26,6 +30,6 @@ public class Poincon
     public double? Diametre { get; set; }
     public string? ChAdm { get; set; }
 
-    public string Status { get; set; } = "actif";
-    public List<Utilisation> Utilisations { get; set; } = new List<Utilisation>();
+    public string Statut { get; set; } = "actif";
+    public ICollection<Utilisation> Utilisations { get; set; } = new List<Utilisation>();
 }

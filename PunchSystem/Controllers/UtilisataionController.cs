@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PunchSystem.DTOs;
 using PunchSystem.Models;
 using PunchSystem.Services;
+using AutoMapper;
 
 namespace PunchSystem.Controllers
 {
@@ -29,13 +31,17 @@ namespace PunchSystem.Controllers
         [HttpPost]
         public async Task<ActionResult<UtilisationDto>> Create([FromBody] CreateUtilisationDto dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var utilisation = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(GetAll), new { id = utilisation.Id }, utilisation);
         }
 
+
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(string id)
         {
             var utilisation = await _service.GetByIdAsync(id);
             if (utilisation == null) return NotFound();
@@ -43,24 +49,21 @@ namespace PunchSystem.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, UpdateUtilisationDto dto)
+        public async Task<IActionResult> Update(string id, UpdateUtilisationDto dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var updated = await _service.UpdateAsync(id, dto);
-            if (!updated) return NotFound();
+            var updated = await _service.UpdateAsync(id, dto); // ✅ méthode doit retourner bool
+
+            if (!updated)
+                return NotFound();
 
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var deleted = await _service.DeleteAsync(id);
-            if (!deleted) return NotFound();
 
-            return NoContent();
-        }
+
 
 
 

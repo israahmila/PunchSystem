@@ -2,7 +2,7 @@
 {
     public class AssignPermissionRequest
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public List<string> Permissions { get; set; } = new();
     }
 }

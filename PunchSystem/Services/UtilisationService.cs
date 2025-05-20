@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PunchSystem.Data;
 using PunchSystem.DTOs;
+using PunchSystem.Helpers;
 using PunchSystem.Models;
-using System.Collections.Generic;
 
 namespace PunchSystem.Services
 {
@@ -15,150 +15,146 @@ namespace PunchSystem.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<UtilisationDto>> GetAllAsync()
+        public async Task<IEnumerable<Utilisation>> GetAllAsync()
         {
             return await _context.Utilisations
-                .Include(u => u.Lots)
-                .Include(u => u.Poincons)
+                .Include(u => u.Produit)
                 .Include(u => u.Users)
-                .Select(u => new UtilisationDto
-                {
-                    Id = u.Id,
-                    DateUtilisation = u.DateUtilisation,
-                    Compresseuse = u.Compresseuse,
-                    NombreComprimés = u.NombreComprimés,
-                    EmplacementRetour = u.EmplacementRetour,
-                    Commentaire = u.Commentaire,
-                    LotNumbers = u.Lots.Select(l => l.LotNumber).ToList(),
-                    PoinconIds = u.Poincons.Select(p => p.Id).ToList(),
-                    CodeFormats = u.Poincons.Select(p => p.CodeFormat).ToList(),
-                    EtatPoincons = u.Poincons.Select(p => p.Status).ToList(),
-                    UserIds = u.Users.Select(u => u.Id).ToList()
-                })
                 .ToListAsync();
         }
 
-        public async Task<UtilisationDto> CreateAsync(CreateUtilisationDto dto)
+        public async Task<Utilisation?> GetByIdAsync(string id)
+        {
+            return await _context.Utilisations
+                .Include(u => u.Produit)
+                .Include(u => u.Users)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<Utilisation> CreateAsync(CreateUtilisationDto dto)
         {
             var utilisation = new Utilisation
             {
-                Compresseuse = dto.Compresseuse,
+                Id = IdGenerator.New("UTL"),
+                Comprimeuse = dto.Comprimeuse ?? string.Empty,
                 NombreComprimés = dto.NombreComprimés,
                 EmplacementRetour = dto.EmplacementRetour,
                 Commentaire = dto.Commentaire,
-                DateUtilisation = DateTime.UtcNow
+                DateUtilisation = DateTime.UtcNow, // ou un champ dans le DTO si fourni
+                Reference = "AUTO-GEN", // ou génère avec Id, Date, etc.
+                CodeFormatPoincon = string.Empty,
+                ProduitId = "", // Si manquant, tu peux l’ajouter dans le DTO
             };
 
-            var poincons = await _context.Poincons
-                .Where(p => dto.PoinconIds.Contains(p.Id))
-                .ToListAsync();
-            utilisation.Poincons = poincons;
-
-            var lots = dto.LotNumbers.Select(ln => new Lot
+            // Charger Users
+            foreach (var userId in dto.UserIds)
             {
-                LotNumber = ln,
-                Produit = dto.Compresseuse
-            }).ToList();
-            utilisation.Lots = lots;
+                var user = await _context.Users.FindAsync(userId);
+                if (user != null)
+                    utilisation.Users.Add(user);
+            }
 
-            var utilisateurs = await _context.Users
-                .Where(u => dto.UserIds.Contains(u.Id))
-                .ToListAsync();
-            utilisation.Users = utilisateurs;
+            // Charger Poinçons
+            foreach (var poinconId in dto.PoinconIds)
+            {
+                var poincon = await _context.Poincons.FindAsync(poinconId);
+                if (poincon != null)
+                    utilisation.Poincons.Add(poincon);
+            }
+
+            // Créer les Lots
+            foreach (var lotNumber in dto.LotNumbers)
+            {
+                utilisation.Lots.Add(new Lot
+                {
+                    Id = IdGenerator.New("LOT"),
+                    LotNumber = lotNumber,
+                    Produit = "Auto", // ou à ajouter dans DTO
+                    Utilisation = utilisation
+                });
+            }
 
             _context.Utilisations.Add(utilisation);
             await _context.SaveChangesAsync();
-
-            return new UtilisationDto
-            {
-                Id = utilisation.Id,
-                DateUtilisation = utilisation.DateUtilisation,
-                Compresseuse = utilisation.Compresseuse,
-                NombreComprimés = utilisation.NombreComprimés,
-                EmplacementRetour = utilisation.EmplacementRetour,
-                Commentaire = utilisation.Commentaire,
-                LotNumbers = utilisation.Lots.Select(l => l.LotNumber).ToList(),
-                PoinconIds = utilisation.Poincons.Select(p => p.Id).ToList(),
-                CodeFormats = utilisation.Poincons.Select(p => p.CodeFormat).ToList(),
-                EtatPoincons = utilisation.Poincons.Select(p => p.Status).ToList(),
-                UserIds = utilisation.Users.Select(u => u.Id).ToList()
-            };
+            return utilisation;
         }
 
-        public async Task<UtilisationDto?> GetByIdAsync(int id)
+
+        public async Task<bool> UpdateAsync(string id, UpdateUtilisationDto dto)
         {
-            var u = await _context.Utilisations
+            var existing = await _context.Utilisations
                 .Include(u => u.Poincons)
                 .Include(u => u.Users)
                 .Include(u => u.Lots)
                 .FirstOrDefaultAsync(u => u.Id == id);
-
-            if (u == null) return null;
-
-            return new UtilisationDto
-            {
-                Id = u.Id,
-                DateUtilisation = u.DateUtilisation,
-                Compresseuse = u.Compresseuse,
-                NombreComprimés = u.NombreComprimés,
-                EmplacementRetour = u.EmplacementRetour,
-                Commentaire = u.Commentaire,
-                LotNumbers = u.Lots.Select(l => l.LotNumber).ToList(),
-                PoinconIds = u.Poincons.Select(p => p.Id).ToList(),
-                CodeFormats = u.Poincons.Select(p => p.CodeFormat).ToList(),
-                EtatPoincons = u.Poincons.Select(p => p.Status).ToList(),
-                UserIds = u.Users.Select(u => u.Id).ToList()
-            };
-        }
-
-        public async Task<bool> UpdateAsync(int id, UpdateUtilisationDto dto)
-        {
-            var utilisation = await _context.Utilisations
-                .Include(u => u.Poincons)
-                .Include(u => u.Users)
-                .Include(u => u.Lots)
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            if (utilisation == null)
+            if (existing == null)
                 return false;
 
-            utilisation.DateUtilisation = dto.DateUtilisation;
-            utilisation.Compresseuse = dto.Compresseuse;
-            utilisation.NombreComprimés = dto.NombreComprimés;
-            utilisation.EmplacementRetour = dto.EmplacementRetour;
-            utilisation.Commentaire = dto.Commentaire;
 
-            var poincons = await _context.Poincons
-                .Where(p => dto.PoinconIds.Contains(p.Id))
-                .ToListAsync();
-            utilisation.Poincons.Clear();
-            foreach (var p in poincons)
-                utilisation.Poincons.Add(p);
+            // Propriétés simples
+            existing.Reference = dto.Reference;
+            existing.DateUtilisation = dto.DateUtilisation;
+            existing.Comprimeuse = dto.Comprimeuse;
+            existing.ProduitId = dto.ProduitId;
+            existing.CodeFormatPoincon = dto.CodeFormatPoincon;
+            existing.NombreComprimés = dto.NombreComprimés;
+            existing.EmplacementRetour = dto.EmplacementRetour;
+            existing.Commentaire = dto.Commentaire;
+            existing.UpdatedAt = DateTime.UtcNow;
 
-            var users = await _context.Users
-                .Where(u => dto.UserIds.Contains(u.Id))
-                .ToListAsync();
-            utilisation.Users.Clear();
-            foreach (var u in users)
-                utilisation.Users.Add(u);
+            // 🎯 Replace Poincons
+            existing.Poincons.Clear();
+            foreach (var poinconId in dto.PoinconIds)
+            {
+                var poincon = await _context.Poincons.FindAsync(poinconId);
+                if (poincon != null)
+                    existing.Poincons.Add(poincon);
+            }
+
+            // 🎯 Replace Users
+            existing.Users.Clear();
+            foreach (var userId in dto.UserIds)
+            {
+                var user = await _context.Users.FindAsync(userId);
+                if (user != null)
+                    existing.Users.Add(user);
+            }
+
+            // 🎯 Replace Lots
+            _context.Lots.RemoveRange(existing.Lots);
+            foreach (var lot in dto.Lots)
+            {
+                lot.Id = IdGenerator.New("LOT");
+                existing.Lots.Add(lot);
+            }
 
             await _context.SaveChangesAsync();
             return true;
         }
-        public async Task<bool> DeleteAsync(int id)
+
+
+        public async Task DeleteAsync(string id, string raison, string utilisateur)
         {
             var utilisation = await _context.Utilisations.FindAsync(id);
+            if (utilisation == null) return;
 
-            if (utilisation == null || utilisation.IsDeleted)
-                return false;
+            _context.Utilisations.Remove(utilisation);
 
-            utilisation.IsDeleted = true;
-            _context.Utilisations.Update(utilisation);
+            _context.AuditTrails.Add(new AuditTrail
+            {
+                Id = IdGenerator.New("AUD"),
+                Module = "Utilisation",
+                Action = "DELETE",
+                ReferenceObjet = utilisation.Id,
+                Date = DateTime.UtcNow,
+                Utilisateur = utilisateur,
+                Raison = raison
+            });
+
             await _context.SaveChangesAsync();
-
-            return true;
         }
 
-
+        
     }
+
 }

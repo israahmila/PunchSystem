@@ -20,7 +20,7 @@ namespace PunchSystem.Controllers
         public async Task<IActionResult> GetAllPermissions()
         {
             var permissions = await _context.Permissions
-                .Select(p => p.Name)
+                .Select(p => p.Module)
                 .ToListAsync();
 
             return Ok(permissions);
@@ -28,12 +28,12 @@ namespace PunchSystem.Controllers
 
         // GET: api/permissions/user/{userId}
         [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserPermissions(int userId)
+        public async Task<IActionResult> GetUserPermissions(string userId)
         {
             var userPermissions = await _context.UserPermissions
                 .Where(up => up.UserId == userId)
                 .Include(up => up.Permission)
-                .Select(up => up.Permission.Name)
+                .Select(up => up.Permission.Module)
                 .ToListAsync();
 
             return Ok(userPermissions);

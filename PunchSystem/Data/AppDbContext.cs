@@ -1,56 +1,57 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore;
-using PunchSystem.Services;
+﻿using Microsoft.EntityFrameworkCore;
 using PunchSystem.Models;
+using PunchSystem.Services;
 
 namespace PunchSystem.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         private readonly IUserContextService _userContext;
-        public AppDbContext(DbContextOptions<AppDbContext> options, IUserContextService userContext) : base(options)
+
+        public AppDbContext(DbContextOptions<AppDbContext> options, IUserContextService userContext)
+            : base(options)
         {
             _userContext = userContext;
         }
 
-        public DbSet<User> Users => Set<User>();
-        public DbSet<LoginHistory> LoginHistories => Set<LoginHistory>();
-        public DbSet<Permission> Permissions => Set<Permission>();
-        public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
-        public DbSet<Role> Roles => Set<Role>();
-        public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
-        public DbSet<Poincon> Poincons => Set<Poincon>();
+        // 📦 DbSets principaux
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<UserPermission> UserPermissions { get; set; }
+
+        public DbSet<Produit> Produits { get; set; }
+        public DbSet<Poincon> Poincons { get; set; }
+        public DbSet<Fournisseur> Fournisseurs { get; set; }
+        public DbSet<Marque> Marques { get; set; }
+
         public DbSet<Utilisation> Utilisations { get; set; }
         public DbSet<Lot> Lots { get; set; }
 
-
-
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            var entries = ChangeTracker
-                .Entries<AuditableEntity>()
-                .Where(e => e.State == EntityState.Added);
-
-            foreach (var entry in entries)
-            {
-                entry.Entity.CreatedAt = DateTime.UtcNow;
-                entry.Entity.CreatedBy = _userContext.GetCurrentUserId() ?? "system";
-            }
-
-            return await base.SaveChangesAsync(cancellationToken);
-        }
-
+        public DbSet<Entretien> Entretiens { get; set; }
+        public DbSet<AuditTrail> AuditTrails { get; set; }
+        public DbSet<LoginHistory> LoginHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasIndex(u => u.Username).IsUnique();
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<LoginHistory>()
-                .HasOne(l => l.User)
-                .WithMany(u => u.LoginHistories)
-                .HasForeignKey(l => l.UserId);
+            // ✅ Configuration clé composée : RolePermission
+            modelBuilder.Entity<RolePermission>()
+                .HasKey(rp => new { rp.RoleId, rp.PermissionId });
 
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(rp => rp.Role)
+                .WithMany(r => r.RolePermissions)
+                .HasForeignKey(rp => rp.RoleId);
+
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(rp => rp.Permission)
+                .WithMany(p => p.RolePermissions)
+                .HasForeignKey(rp => rp.PermissionId);
+
+            // ✅ Configuration clé composée : UserPermission
             modelBuilder.Entity<UserPermission>()
                 .HasKey(up => new { up.UserId, up.PermissionId });
 
@@ -63,42 +64,40 @@ namespace PunchSystem.Data
                 .HasOne(up => up.Permission)
                 .WithMany(p => p.UserPermissions)
                 .HasForeignKey(up => up.PermissionId);
-            modelBuilder.Entity<Role>().HasIndex(r => r.Name).IsUnique();
 
-            modelBuilder.Entity<RolePermission>()
-                .HasKey(rp => new { rp.RoleId, rp.PermissionId });
-
-            modelBuilder.Entity<RolePermission>()
-                .HasOne(rp => rp.Role)
-                .WithMany(r => r.RolePermissions)
-                .HasForeignKey(rp => rp.RoleId);
-
-            modelBuilder.Entity<RolePermission>()
-                .HasOne(rp => rp.Permission)
-                .WithMany()
-                .HasForeignKey(rp => rp.PermissionId);
-            // Configure Utilisation-Poincon many-to-many
+            // ✅ Many-to-Many: Utilisation <-> User
             modelBuilder.Entity<Utilisation>()
-                .HasMany(u => u.Poincons)
-                .WithMany(p => p.Utilisations);
+    .HasMany(u => u.Users)
+    .WithMany(u => u.Utilisations)
+    .UsingEntity(j => j.ToTable("UtilisationUsers"));
 
-            // Configure Utilisation-Lot one-to-many
+
+            // ✅ Many-to-Many: Utilisation <-> Poincon
             modelBuilder.Entity<Utilisation>()
-                .HasMany(u => u.Lots)
-                .WithOne(l => l.Utilisation)
-                .HasForeignKey(l => l.UtilisationId);
+    .HasMany(u => u.Poincons)
+    .WithMany(p => p.Utilisations)
+    .UsingEntity(j => j.ToTable("UtilisationPoincons"));
+        }
 
-            // Configure Utilisation-User many-to-many
-            modelBuilder.Entity<Utilisation>()
-                .HasMany(u => u.Users)
-                .WithMany(u => u.Utilisations);
+        // Optionnel : override SaveChanges pour l'audit (CreatedAt, UpdatedAt)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries<AuditableEntity>();
 
-            modelBuilder.Entity<Utilisation>()
-                .HasQueryFilter(u => !u.IsDeleted);
+            foreach (var entry in entries)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedAt = DateTime.UtcNow;
+                        break;
+                    case EntityState.Modified:
+                        entry.Entity.UpdatedAt = DateTime.UtcNow;
+                        break;
+                }
+            }
 
-
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
-
 }
-

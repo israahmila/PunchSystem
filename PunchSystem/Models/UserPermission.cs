@@ -1,11 +1,11 @@
 ﻿namespace PunchSystem.Models
 {
-    public class UserPermission
+    public class UserPermission : AuditableEntity
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }= string.Empty;
         public User User { get; set; } = null!;
 
-        public int PermissionId { get; set; }
+        public string PermissionId { get; set; } = string.Empty;
         public Permission Permission { get; set; } = null!;
     }
 }

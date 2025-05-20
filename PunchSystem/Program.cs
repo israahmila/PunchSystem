@@ -17,9 +17,6 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddScoped<IUtilisationService, UtilisationService>();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
-builder.Services.AddTransient<DataSeeder>();
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -132,11 +129,7 @@ app.UseAuthorization();
 
 
 app.MapControllers();
-using (var scope = app.Services.CreateScope())
-{
-    var seeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
-    await seeder.SeedAsync();
-}
+
 
 
 app.Run();
