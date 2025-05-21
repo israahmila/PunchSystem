@@ -31,8 +31,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // 🛡️ CONFIG PERMISSION-BASED AUTHORIZATION
 builder.Services.AddAuthorization(options =>
 {
-    var permissions = new[] {
-        "EditUsers", "CreateProduct", "DeleteProduct", "ViewDashboard"
+    var permissions = new[]
+    {
+        PermissionPolicies.ManageUsers,
+        PermissionPolicies.ManageRoles,
+        PermissionPolicies.ManageProduits,
+        PermissionPolicies.ManagePoincons,
+        PermissionPolicies.ManageFournisseurs,
+        PermissionPolicies.ManageMarques,
+        PermissionPolicies.CreateUtilisation,
+        PermissionPolicies.ViewStats,
+        PermissionPolicies.ViewAudit
     };
 
     foreach (var permission in permissions)
@@ -41,6 +50,7 @@ builder.Services.AddAuthorization(options =>
             policy.Requirements.Add(new PermissionRequirement(permission)));
     }
 });
+
 
 // 🧠 DEPENDENCY INJECTION
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -57,6 +67,8 @@ builder.Services.AddScoped<IUtilisationService, UtilisationService>();
 builder.Services.AddScoped<IEntretienService, EntretienService>();
 builder.Services.AddScoped<IAuditTrailService, AuditTrailService>();
 builder.Services.AddScoped<IStatsService, StatsService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
+
 
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 

@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using PunchSystem.Contracts;
 using PunchSystem.Models;
+using PunchSystem.Security;
 using PunchSystem.Services;
-
+[Authorize(Policy = PermissionPolicies.ManagePoincons)]
 [ApiController]
 [Route("api/[controller]")]
 public class PoinconController : ControllerBase

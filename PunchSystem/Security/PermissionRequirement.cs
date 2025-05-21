@@ -4,7 +4,11 @@ namespace PunchSystem.Security
 {
     public class PermissionRequirement : IAuthorizationRequirement
     {
-        public string Permission { get; }
-        public PermissionRequirement(string permission) => Permission = permission;
+        public string PermissionName { get; }
+
+        public PermissionRequirement(string permission)
+        {
+            PermissionName = permission;
+        }
     }
 }

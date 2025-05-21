@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using PunchSystem.Contracts;
 using PunchSystem.Models;
+using PunchSystem.Security;
 using PunchSystem.Services;
-
+[Authorize(Policy = PermissionPolicies.ManageMarques)]
 [ApiController]
 [Route("api/[controller]")]
 public class MarqueController : ControllerBase

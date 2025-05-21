@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PunchSystem.Contracts;
+using PunchSystem.Security;
 using PunchSystem.Services;
-
+[Authorize(Policy = PermissionPolicies.ViewAudit)]
 [ApiController]
 [Route("api/[controller]")]
 public class AuditTrailController : ControllerBase

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PunchSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8f99b212f0e2863bc4cbfa6b10fbe80ec0b81af6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c5747e5382e8fcad32ecb1017c23d8d17c16c32")]
 [assembly: System.Reflection.AssemblyProductAttribute("PunchSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PunchSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

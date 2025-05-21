@@ -8,11 +8,14 @@ public class EntretienService : IEntretienService
 {
     private readonly AppDbContext _context;
     private readonly IUserContextService _user;
+    private readonly IAuditService _audit;
 
-    public EntretienService(AppDbContext context, IUserContextService user)
+
+    public EntretienService(AppDbContext context, IUserContextService user, IAuditService audit)
     {
         _context = context;
         _user = user;
+        _audit = audit;
     }
 
     public async Task<IEnumerable<Entretien>> GetAllAsync()
@@ -65,7 +68,9 @@ public class EntretienService : IEntretienService
         });
 
         await _context.SaveChangesAsync();
+
         return true;
+
     }
 
     public async Task<bool> DeleteAsync(string id, string raison)

@@ -6,6 +6,7 @@ using PunchSystem.DTOs;
 using PunchSystem.Models;
 using AutoMapper;
 using PunchSystem.Contracts;
+using PunchSystem.Security;
 
 namespace PunchSystem.Controllers
 {
@@ -29,6 +30,7 @@ namespace PunchSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = PermissionPolicies.CreateUtilisation)]
         public async Task<ActionResult<UtilisationDto>> Create([FromBody] CreateUtilisationDto dto)
         {
             if (!ModelState.IsValid)
