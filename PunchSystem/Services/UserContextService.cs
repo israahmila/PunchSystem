@@ -1,4 +1,6 @@
-﻿namespace PunchSystem.Services
+﻿using PunchSystem.Contracts;
+
+namespace PunchSystem.Services
 {
     public class UserContextService : IUserContextService
     {

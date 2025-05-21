@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PunchSystem.Contracts;
 using PunchSystem.Models;
-using PunchSystem.Services;
 
 namespace PunchSystem.Data
 {

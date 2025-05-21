@@ -1,7 +1,7 @@
 ﻿using PunchSystem.DTOs;
 using PunchSystem.Models;
 
-namespace PunchSystem.Services
+namespace PunchSystem.Contracts
 {
     public interface IUtilisationService
     {

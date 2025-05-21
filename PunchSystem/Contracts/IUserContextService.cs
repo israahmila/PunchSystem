@@ -1,4 +1,4 @@
-﻿namespace PunchSystem.Services
+﻿namespace PunchSystem.Contracts
 {
     public interface IUserContextService
     {

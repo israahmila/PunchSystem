@@ -6,11 +6,11 @@ using PunchSystem.Services;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PoinconController : ControllerBase
+public class FournisseurController : ControllerBase
 {
-    private readonly IPoinconService _service;
+    private readonly IFournisseurService _service;
 
-    public PoinconController(IPoinconService service)
+    public FournisseurController(IFournisseurService service)
     {
         _service = service;
     }
@@ -18,21 +18,21 @@ public class PoinconController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var poincons = await _service.GetAllAsync();
-        return Ok(poincons);
+        var fournisseurs = await _service.GetAllAsync();
+        return Ok(fournisseurs);
     }
 
     [HttpPost]
-    [Authorize(Policy = "CreatePoincon")]
-    public async Task<IActionResult> Create(Poincon poincon)
+    [Authorize(Policy = "CreateFournisseur")]
+    public async Task<IActionResult> Create(Fournisseur fournisseur)
     {
-        var result = await _service.CreateAsync(poincon);
+        var result = await _service.CreateAsync(fournisseur);
         return CreatedAtAction(nameof(GetAll), new { id = result.Id }, result);
     }
 
     [HttpPut("{id}")]
-    [Authorize(Policy = "EditPoincon")]
-    public async Task<IActionResult> Update(string id, Poincon updated, [FromQuery] string raison)
+    [Authorize(Policy = "EditFournisseur")]
+    public async Task<IActionResult> Update(string id, Fournisseur updated, [FromQuery] string raison)
     {
         if (string.IsNullOrWhiteSpace(raison)) return BadRequest("La raison est obligatoire.");
         var ok = await _service.UpdateAsync(id, updated, raison);
@@ -41,7 +41,7 @@ public class PoinconController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Policy = "DeletePoincon")]
+    [Authorize(Policy = "DeleteFournisseur")]
     public async Task<IActionResult> SoftDelete(string id, [FromQuery] string raison)
     {
         if (string.IsNullOrWhiteSpace(raison)) return BadRequest("La raison est obligatoire.");

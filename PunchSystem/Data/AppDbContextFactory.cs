@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using PunchSystem.Services;
+using PunchSystem.Contracts;
 
 namespace PunchSystem.Data
 {

@@ -48,9 +48,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProduitService, ProduitService>();
+builder.Services.AddScoped<IPoinconService, PoinconService>();
+builder.Services.AddScoped<IFournisseurService, FournisseurService>();
+builder.Services.AddScoped<IMarqueService, MarqueService>();
 builder.Services.AddScoped<IUtilisationService, UtilisationService>();
+builder.Services.AddScoped<IEntretienService, EntretienService>();
+builder.Services.AddScoped<IAuditTrailService, AuditTrailService>();
+builder.Services.AddScoped<IStatsService, StatsService>();
+
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
 // 📦 CONTROLLERS

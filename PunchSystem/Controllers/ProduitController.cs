@@ -6,11 +6,11 @@ using PunchSystem.Services;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PoinconController : ControllerBase
+public class ProduitController : ControllerBase
 {
-    private readonly IPoinconService _service;
+    private readonly IProduitService _service;
 
-    public PoinconController(IPoinconService service)
+    public ProduitController(IProduitService service)
     {
         _service = service;
     }
@@ -18,21 +18,21 @@ public class PoinconController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var poincons = await _service.GetAllAsync();
-        return Ok(poincons);
+        var produits = await _service.GetAllAsync();
+        return Ok(produits);
     }
 
     [HttpPost]
-    [Authorize(Policy = "CreatePoincon")]
-    public async Task<IActionResult> Create(Poincon poincon)
+    [Authorize(Policy = "CreateProduit")]
+    public async Task<IActionResult> Create(Produit produit)
     {
-        var result = await _service.CreateAsync(poincon);
+        var result = await _service.CreateAsync(produit);
         return CreatedAtAction(nameof(GetAll), new { id = result.Id }, result);
     }
 
     [HttpPut("{id}")]
-    [Authorize(Policy = "EditPoincon")]
-    public async Task<IActionResult> Update(string id, Poincon updated, [FromQuery] string raison)
+    [Authorize(Policy = "EditProduit")]
+    public async Task<IActionResult> Update(string id, [FromBody] Produit updated, [FromQuery] string raison)
     {
         if (string.IsNullOrWhiteSpace(raison)) return BadRequest("La raison est obligatoire.");
         var ok = await _service.UpdateAsync(id, updated, raison);
@@ -41,7 +41,7 @@ public class PoinconController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize(Policy = "DeletePoincon")]
+    [Authorize(Policy = "DeleteProduit")]
     public async Task<IActionResult> SoftDelete(string id, [FromQuery] string raison)
     {
         if (string.IsNullOrWhiteSpace(raison)) return BadRequest("La raison est obligatoire.");

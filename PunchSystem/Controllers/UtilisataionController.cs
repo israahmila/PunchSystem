@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PunchSystem.DTOs;
 using PunchSystem.Models;
-using PunchSystem.Services;
 using AutoMapper;
+using PunchSystem.Contracts;
 
 namespace PunchSystem.Controllers
 {
