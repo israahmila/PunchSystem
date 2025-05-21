@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
 using PunchSystem.DTOs;
+using PunchSystem.Models;
 using LoginRequest = PunchSystem.DTOs.LoginRequest;
 using RegisterRequest = PunchSystem.DTOs.RegisterRequest;
 
@@ -9,5 +10,10 @@ namespace PunchSystem.Contracts
     {
         Task<AuthResponse?> LoginAsync(LoginRequest request, string ipAddress);
         Task<bool> RegisterAsync(RegisterRequest request);
+        Task<bool> ResetPasswordAsync(DTOs.ResetPasswordRequest request);
+        Task<User?> GetUserByIdAsync(string id);
+        Task<bool> UpdateUserAsync(string id, UpdateUserRequest request);
+
+
     }
 }

@@ -50,13 +50,24 @@ builder.Services.AddAuthorization(options =>
             policy.Requirements.Add(new PermissionRequirement(permission)));
     }
 });
-
+// 🌐 CORS CONFIG (Angular)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 // 🧠 DEPENDENCY INJECTION
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserContextService, UserContextService>();
+builder.Services.AddScoped<IAuthorizationHandler, PermissionHandler>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProduitService, ProduitService>();
@@ -69,8 +80,8 @@ builder.Services.AddScoped<IAuditTrailService, AuditTrailService>();
 builder.Services.AddScoped<IStatsService, StatsService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
 
-
-builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // 📦 CONTROLLERS
 builder.Services.AddControllers();
@@ -108,20 +119,17 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// 🌐 CORS CONFIG (Angular)
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngularApp", policy =>
-    {
-        policy
-            .WithOrigins("http://localhost:4200")
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-    });
-});
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); // ✅ Logs dans la console
+
 
 var app = builder.Build();
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//    DbInitializer.SeedRoles(db);
+//}
 
 // 🚀 MIDDLEWARE PIPELINE
 app.UseCors("AllowAngularApp");
@@ -140,23 +148,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-using (var scope = app.Services.CreateScope())
-{
-    var dbOptions = scope.ServiceProvider.GetRequiredService<DbContextOptions<AppDbContext>>();
-
-    // Injecte manuellement le "faux utilisateur"
-    var fakeUserContext = new SystemUserContextService();
-
-    var db = new AppDbContext(dbOptions, fakeUserContext);
-
-    DbInitializer.SeedRoles(db); // ou SeedAll() si tu en as plusieurs
-}
-
-
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    DbInitializer.SeedRoles(db);
-}
 
 app.Run();

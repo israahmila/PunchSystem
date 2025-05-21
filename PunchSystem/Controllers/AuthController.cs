@@ -41,13 +41,26 @@ namespace PunchSystem.Controllers
                 }
             }
 
-            [Authorize]
-            [HasPermission("EditUsers")]
-            [HttpPut("users/{id}")]
-            public IActionResult EditUser(int id)
-            {
-                return Ok("You have access");
-            }
+        [Authorize]
+        [HasPermission("EditUsers")]
+        [HttpPut("users/{id}")]
+        public async Task<IActionResult> EditUser(string id, UpdateUserRequest request)
+        {
+            var user = await _authService.GetUserByIdAsync(id);
+            if (user == null)
+                return NotFound("User not found");
+
+            var result = await _authService.UpdateUserAsync(id, request);
+            return result ? Ok("User updated successfully") : BadRequest("Update failed");
         }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(DTOs.ResetPasswordRequest request)
+        {
+            var result = await _authService.ResetPasswordAsync(request);
+            return result ? Ok("Password updated") : BadRequest("User not found or error");
+        }
+
     }
+}
 

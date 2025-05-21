@@ -13,7 +13,8 @@ namespace PunchSystem.Models
         public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
 
         [NotMapped]
-        public string Name => $"{Module}.{Action}";
+        public string Name => $"{Module ?? ""}.{Action ?? ""}";
+
 
     }
 

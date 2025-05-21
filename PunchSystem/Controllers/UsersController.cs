@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PunchSystem.Data;
+using PunchSystem.DTOs;
 using PunchSystem.Models;
 using PunchSystem.Security;
 
@@ -71,10 +72,7 @@ namespace PunchSystem.Controllers
             return Ok(effective);
         }
 
-        public class AssignPermissionRequest
-        {
-            public string PermissionId { get; set; } = string.Empty;
-        }
+
 
         [HttpPost("{id}/permissions")]
         public async Task<IActionResult> AssignPermission(string id, AssignPermissionRequest request)
@@ -82,7 +80,8 @@ namespace PunchSystem.Controllers
             var exists = await _context.UserPermissions
                 .AnyAsync(up => up.UserId == id && up.PermissionId == request.PermissionId);
 
-            if (exists) return BadRequest("Permission already assigned");
+            if (exists)
+                return BadRequest("Permission already assigned");
 
             _context.UserPermissions.Add(new UserPermission
             {
@@ -91,8 +90,9 @@ namespace PunchSystem.Controllers
             });
 
             await _context.SaveChangesAsync();
-            return Ok();
+            return Ok("Permission assigned successfully");
         }
+
 
         [HttpDelete("{id}/permissions/{permissionId}")]
         public async Task<IActionResult> RevokePermission(string id, string permissionId)

@@ -19,7 +19,7 @@ namespace PunchSystem.Controllers
         }
 
         // 📊 Utilisations par jour (sur 30 jours)
-        [HttpGet("utilisations")]
+        [HttpGet("utilisations-par-jour")] // ✅ Renamed route to prevent conflict
         public async Task<IActionResult> GetUtilisationsParJour()
         {
             var endDate = DateTime.UtcNow.Date;
@@ -40,7 +40,7 @@ namespace PunchSystem.Controllers
         }
 
         // 📊 État des poinçons par Statut
-        [HttpGet("etat-poincons")]
+        [HttpGet("etat-poincon")]
         public async Task<IActionResult> GetEtatPoincons()
         {
             var data = await _context.Poincons
@@ -56,7 +56,7 @@ namespace PunchSystem.Controllers
         }
 
         // 📊 Statistiques globales
-        [HttpGet("global")]
+        [HttpGet("globale")]
         public async Task<IActionResult> GetStatsGlobales()
         {
             var totalUsers = await _context.Users.CountAsync();

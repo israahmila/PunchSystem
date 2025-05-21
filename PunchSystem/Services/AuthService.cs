@@ -15,11 +15,13 @@ public class AuthService : IAuthService
 {
     private readonly AppDbContext _context;
     private readonly IConfiguration _config;
+    private readonly IUserContextService _userContext;
 
-    public AuthService(AppDbContext context, IConfiguration config)
+    public AuthService(AppDbContext context, IConfiguration config, IUserContextService userContext)
     {
         _context = context;
         _config = config;
+        _userContext = userContext;
     }
 
     public async Task<bool> RegisterAsync(RegisterRequest request)
@@ -132,4 +134,41 @@ public class AuthService : IAuthService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+    public async Task<bool> ResetPasswordAsync(ResetPasswordRequest request)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+        if (user == null) return false;
+
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+        user.UpdatedAt = DateTime.UtcNow;
+        user.UpdatedBy = "SYSTEM"; // Or capture IP/user if logged in
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    public async Task<User?> GetUserByIdAsync(string id)
+    {
+        return await _context.Users
+            .Include(u => u.Role)
+            .Include(u => u.UserPermissions)
+            .FirstOrDefaultAsync(u => u.Id == id);
+    }
+
+    public async Task<bool> UpdateUserAsync(string id, UpdateUserRequest request)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null) return false;
+
+        user.Username = request.Username ?? user.Username;
+        user.Email = request.Email ?? user.Email;
+        user.RoleId = request.RoleId ?? user.RoleId;
+        user.IsActive = request.IsActive ?? user.IsActive;
+        user.UpdatedAt = DateTime.UtcNow;
+        user.UpdatedBy = _userContext.GetCurrentUserId();
+
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
 }
